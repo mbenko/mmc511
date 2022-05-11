@@ -3,9 +3,9 @@ az login
 az account set --s fy22-mvp-imademo
 az account show
 
-$appName = "mmc"
-$env = "511"
-$rg = "bnk-$appName-$env-rg"
+$appName = "mmc511"
+$env = "arm"
+$rg = "bnk-$env-$appName-rg"
 $today = Get-Date -Format 'MMddyy-hhmm'
 $deploymentName = "testArm-$today"
 $templateFile = ".\mySite.json"
