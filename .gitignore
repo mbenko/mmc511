@@ -2,7 +2,8 @@ obj
 bin
 .vs
 publish
-**/.terraform/*
+.terraform/
+.terraform.*
 *.tfstate
 *.tfstate.*
 
