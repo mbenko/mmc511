@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appName": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "env": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "siteName":"[concat('arm-', parameters('appName'), parameters('env'), '-site')]",
+        "hostName":"[concat('arm-', parameters('appName'), parameters('env'), '-host')]"
+
+    },
+    "resources": [
+        {
+            "name": "[variables('hostName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-12-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "F1",
+                "capacity": 1
+            },
+            "tags": {
+                "displayName": "[variables('hostName')]"
+            },
+            "properties": {
+                "name": "[variables('hostName')]"
+            }
+        },
+        {
+            "name": "[variables('siteName')]",
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-12-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms', variables('hostName'))]": "Resource",
+                "displayName": "[variables('siteName')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostName'))]"
+            ],
+            "properties": {
+                "name": "[variables('siteName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostName'))]"
+            }
+        }
+    ],
+    "outputs": {
+        "siteName": {
+            "type": "string",
+            "value": "[variables('siteName')]"
+        },
+        "rgName": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        }
+    }
+}

@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class='jumbotron' style='background-color:lightgray;'>
+    <h3><b>Machine:</b> @System.Environment.MachineName</h3>
+    <h3><b>OS:</b> @System.Environment.OSVersion</h3>
+</div>
